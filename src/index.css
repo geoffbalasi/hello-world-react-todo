@@ -1,26 +1,96 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+	font-family: sans-serif;
+  	margin: 0;
+  	padding: 0; 
+  	font-size: 14px;
+  	color: #222;
 }
 
-.search {
+h1 {
+	padding-top: 40px;
+	padding-bottom: 20px;
+}
 
+.clear {
+	clear: both;
+}
+
+.search_container {
+	margin: 30px auto;
+	width: 80%
+}
+
+.container {
+	margin: auto;
+	width: 80%
+}
+
+.searchbox {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    outline: none; 
+    padding: 12px 15px;
+    position: relative;
+    width: 100%;
+}
+
+.searchbox:hover {
+	background-color: #fdfdfd;
+}
+
+.searchbox:focus {
+	background-color: #fafafa;
+	border-color: #9ec3ff;
+}
+
+.button {
+    background-color: #66a0ff;
+    border-radius: 0px 3px 3px 0px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    float: right;
+    outline: none; 
+    padding: 13px 19px;
+    position: relative;
+    margin-top: -39px;
+    z-index: 1;
+}
+
+.button .disabled {
+
+}
+
+.button:hover {
+	background-color: #478dff;
+}
+
+.button:active {
+	background-color: #3281ff;
 }
 
 .item {
-	border: 1px solid black;
-	margin: 10px auto;
-	overflow: auto;
-	width: 70%
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 8px 0px #888;
+	margin: 15px 0; 
+	padding: 13px 15px 12px;
 }
 
-.item div {
-  float: left;
-  padding: 10px;
-  height: 20px;
+.item:hover {
+	border: none;
+	background-color: #fafafa;
+	box-shadow: 0px 0px 8px 0px #888;
+	margin: 30px 0; 
+	padding: 13px 15px 12px;
 }
 
 .item div:first-child {
-	width: 90%;
+	float: left;
 }
+.item div.delete {
+	float: right;
+	cursor: pointer;
+}
+

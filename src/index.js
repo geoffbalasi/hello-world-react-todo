@@ -5,9 +5,10 @@ import './index.css';
 var AddItem = React.createClass({
     render: function(){
         return (
-            <div>
-            	<input type="text" placeholder="Enter Todo List Item" value={this.props.newItem} onChange={this.props.onChange} />
-                <input type="submit" value="Add" onClick={this.props.onAdd} />
+            <div className="search_container">
+            	<h1> Today's Tasks </h1>
+            	<input className="searchbox" type="text" placeholder="Enter Todo List Item" value={this.props.newItem} onChange={this.props.onChange} onKeyPress={this.props.keyPress} />
+                <input className="button" type="submit" value="Add" onClick={this.props.onAdd} disabled={this.props.disabled} />
             </div>
         );
     }
@@ -19,11 +20,12 @@ var ItemList = React.createClass({
 		var todos = this.props.items.map(function(item, index){
             return <div className="item">
             			<div key={index} > {item} </div>
-            			<div onClick={remove} id={index}> x </div>
+            			<div className="delete" onClick={remove} id={index}> x </div>
+            			<div className="clear"> </div>
             		</div>
         });  
 		return (
-			<div> {todos} </div>
+			<div className="container"> {todos} </div>
 		);
 	}
 });
@@ -32,7 +34,8 @@ var App = React.createClass({
     getInitialState: function(){
         return {
             items: [],
-            newItem: ''
+            newItem: '',
+            disabled: true
         }
     },
     onAdd: function(){
@@ -40,7 +43,16 @@ var App = React.createClass({
         	items: state.items.push(state.newItem)
         });
         this.resetInput();
+        this.state.disabled = true;
     },
+    _handleKeyPress: function(e) {
+    	if (e.key === 'Enter') {
+    		this.disabled(this.state.newItem);
+    		if (!this.state.disabled) {
+    			this.onAdd();
+    		}
+    	}
+	},
     resetInput: function(){
     	this.setState({ newItem: '' })
     },
@@ -51,15 +63,27 @@ var App = React.createClass({
     	});
     },
     onChange: function(event) {
-    	this.setState({
-    		newItem : event.target.value
+    	this.disabled(event.target.value);
+		this.setState({
+    		newItem : event.target.value,
     	})
+    },
+    disabled: function(text) {
+    	if ( text === '' ) {
+    		this.setState({
+	    		disabled : true
+	    	})
+    	}
+    	else {
+    		this.setState({
+	    		disabled : false
+	    	})
+    	}
     },
     render: function(){
         return (
             <div>
-                <h1> Todo List </h1>
-                <AddItem onAdd={this.onAdd} onChange={this.onChange} newItem={this.state.newItem} />
+                <AddItem onAdd={this.onAdd} onChange={this.onChange} newItem={this.state.newItem} keyPress={this._handleKeyPress} disabled={this.state.disabled}/>
                 <ItemList items={this.state.items} removeItem={this.removeItem} />
             </div>
         );
