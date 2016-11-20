@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import update from 'immutability-helper';
 import './index.css';
+
+
 
 var AddItem = React.createClass({
     render: function(){
@@ -45,15 +48,17 @@ var Item = React.createClass({
 var App = React.createClass({
     getInitialState: function(){
         return {
-            items: [],
+            items: [{ value: 'asdf' , editable: false }],
             newItem: { value: '' , editable: false },
             disabled: true
         }
     },
     onAdd: function(){
-    	var newItem = this.state.newItem;
+    	var newItem = update(this.state.newItem, {editable:{$set: true}});
+    	newItem.editable = false;
+    	var newItems = this.state.items.push(newItem);
         this.setState(function(state){
-        	items: state.items.push(newItem)
+        	items: newItems
         });
         this.resetInput();
         this.state.disabled = true;
