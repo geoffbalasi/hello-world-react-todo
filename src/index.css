@@ -6,6 +6,11 @@ body {
   	color: #222;
 }
 
+input {
+	font-size: 14px;
+	font-family: sans-serif;
+}
+
 h1 {
 	padding-top: 40px;
 	padding-bottom: 20px;
@@ -23,6 +28,12 @@ h1 {
 .container {
 	margin: auto;
 	width: 80%
+}
+
+.empty {
+	text-align: center;
+    color: #bbb;
+    font-weight: 300;
 }
 
 .searchbox {
@@ -52,9 +63,9 @@ h1 {
     cursor: pointer;
     float: right;
     outline: none; 
-    padding: 13px 19px;
+    padding: 12px 19px;
     position: relative;
-    margin-top: -39px;
+    margin-top: -41px;
     z-index: 1;
 }
 
@@ -78,8 +89,14 @@ h1 {
 	padding: 13px 15px 12px;
 }
 
+.item input {
+	border: none;
+    outline: none;
+    width: 90%;
+}
+	
 .item:hover {
-	background-color: #fafafa;
+	
 }
 
 .item div:first-child {

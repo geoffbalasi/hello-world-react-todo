@@ -10,7 +10,7 @@ var AddItem = React.createClass({
         return (
             <div className="search_container">
             	<h1> Today's Tasks </h1>
-            	<input className="searchbox" type="text" placeholder="Enter Todo List Item" value={this.props.newItem.value} onChange={this.props.onChange} onKeyPress={this.props.keyPress} />
+            	<input ref="editItem" className="searchbox" type="text" placeholder="Enter Todo List Item" value={this.props.newItem.value} onChange={this.props.onChange} onKeyPress={this.props.keyPress} />
                 <input className="button" type="submit" value="Add" onClick={this.props.onAdd} disabled={this.props.disabled} />
             </div>
         );
@@ -21,34 +21,39 @@ var ItemList = React.createClass({
 	render: function(){	
 		var remove = this.props.removeItem;
 		var edit = this.props.edit;
+		var update = this.props.update;
 		var todos = this.props.items.map(function(item, index){
             return <div key={index} className="item">
-            			<Item item={item} edit={edit} />
+            			<Item item={item} edit={edit} id={index} update={update} />
             			<div className="delete" onClick={remove} id={index}> x </div>
             			<div className="clear"> </div>
             		</div>
         });  
-		return (
-			<div className="container"> {todos} </div>
-		);
+        if (this.props.items.length > 0) {
+        	return (
+				<div className="container"> {todos} </div>
+			);
+        }
+        else {
+        	return (
+        		<div className="empty"> Nothing here yet </div>
+        	);
+        	
+        }
+		
 	}
 });
 
 var Item = React.createClass({
 	render: function(){
-		if (!this.props.item.editable) {
-			return <div> {this.props.item.value} </div>
-		}
-		else {
-			return <input type="text" defaultValue={this.props.item.value} onChange={this.props.edit} />
-		}
+		return <input type="text" value={this.props.item.value} onChange={this.props.update} id={this.props.id}/>
 	}
 });
 
 var App = React.createClass({
     getInitialState: function(){
         return {
-            items: [{ value: 'asdf' , editable: false }],
+            items: [],
             newItem: { value: '' , editable: false },
             disabled: true
         }
@@ -84,16 +89,6 @@ var App = React.createClass({
     		items: state.items.splice(id,1);
     	});
     },
-    editItem: function(event){
-    	var id = event.target.id;
-    	var value = event.target.value;
-    	// replace item value with input value
-    	var items = this.state.items;
-    	items[id] = value;
-    	this.setState({
-    		items: items
-    	});
-    },
     onChange: function(event) {
     	this.disabled(event.target.value);
     	var value = event.target.value;
@@ -102,6 +97,15 @@ var App = React.createClass({
 		this.setState({
     		newItem: newItem
     	})
+    },
+    updateItem: function(event) {
+    	var id = event.target.id;
+    	var value = event.target.value;
+    	var items = this.state.items;
+		items[id].value = value;
+    	this.setState({
+    		items: items
+    	});
     },
     disabled: function(text) {
     	if ( text.value === '' ) {
@@ -119,7 +123,7 @@ var App = React.createClass({
         return (
             <div>
                 <AddItem onAdd={this.onAdd} onChange={this.onChange} newItem={this.state.newItem} keyPress={this._handleKeyPress} disabled={this.state.disabled}/>
-                <ItemList items={this.state.items} removeItem={this.removeItem} edit={this.editItem} />
+                <ItemList items={this.state.items} removeItem={this.removeItem} edit={this.editItem} update={this.updateItem} />
             </div>
         );
     }
