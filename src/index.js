@@ -9,26 +9,31 @@ var App = React.createClass({
     getInitialState: function(){
         return {
             items: [],
-            newItem: { value: '' , editable: false },
+            newItem: { value: '' },
             disabled: true
         }
     },
     onAdd: function(){
-    	var newItem = update(this.state.newItem, {editable:{$set: true}});
-    	newItem.editable = false;
-    	var newItems = this.state.items.push(newItem);
-        this.setState(function(state){
-        	items: newItems
+    	// what is a better way to go about this??
+    	var newItem = update(this.state.newItem, {value:{$set: ''}});
+    	newItem.value = this.state.newItem.value;
+
+    	var Items = this.state.items;
+    	Items.push(newItem);
+        this.setState({
+        	items: Items,
+        	disabled: true
         });
         this.resetInput();
-        this.state.disabled = true;
     },
     _handleKeyPress: function(e) {
+    	//Attempt to add when Enter key is pressed
     	if (e.key === 'Enter' && !this.state.disabled) {
     		this.onAdd();
     	}
 	},
     resetInput: function(){
+    	//After adding value, clear out input
     	var newItem = this.state.newItem;
     	newItem.value = '';
     	this.setState({ 
@@ -36,12 +41,16 @@ var App = React.createClass({
     	})
     },
     removeItem: function(event){
+    	//Deleting a todo
     	var id = event.target.id;
-    	this.setState(function(state){
-    		items: state.items.splice(id,1);
+    	var items = this.state.items;
+    	items.splice(id,1);
+    	this.setState({
+    		items: items
     	});
     },
     onChange: function(event) {
+    	//Update the state when an input occurs
     	this.disabled(event.target.value);
     	var value = event.target.value;
     	var newItem = this.state.newItem;
@@ -51,6 +60,7 @@ var App = React.createClass({
     	})
     },
     updateItem: function(event) {
+    	//Update the state when text is changed
     	var id = event.target.id;
     	var value = event.target.value;
     	var items = this.state.items;
@@ -60,6 +70,7 @@ var App = React.createClass({
     	});
     },
     disabled: function(text) {
+    	//Disable input when there is no text entered
     	if ( text === '' ) {
     		this.setState({
 	    		disabled : true

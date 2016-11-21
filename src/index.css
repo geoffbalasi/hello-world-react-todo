@@ -1,9 +1,9 @@
 body {
+	color: #222;
 	font-family: sans-serif;
+	font-size: 14px;
   	margin: 0;
   	padding: 0; 
-  	font-size: 14px;
-  	color: #222;
 }
 
 input {
@@ -16,24 +16,36 @@ h1 {
 	padding-bottom: 20px;
 }
 
-.clear {
-	clear: both;
-}
-
-.search_container {
-	margin: 30px auto;
-	width: 80%
-}
-
 .container {
 	margin: auto;
 	width: 80%
 }
 
-.empty {
-	text-align: center;
-    color: #bbb;
-    font-weight: 300;
+.button {
+    background-color: #66a0ff;
+    border-radius: 0px 3px 3px 0px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    float: right;
+    margin-top: -41px;
+    outline: none; 
+    padding: 12px 19px;
+    position: relative;
+    z-index: 1;
+}
+
+.button:hover {
+	background-color: #478dff;
+}
+
+.button:active {
+	background-color: #3281ff;
+}
+
+.search_container {
+	margin: 30px auto;
+	width: 80%
 }
 
 .searchbox {
@@ -55,30 +67,10 @@ h1 {
 	border-color: #9ec3ff;
 }
 
-.button {
-    background-color: #66a0ff;
-    border-radius: 0px 3px 3px 0px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    float: right;
-    outline: none; 
-    padding: 12px 19px;
-    position: relative;
-    margin-top: -41px;
-    z-index: 1;
-}
-
-.button .disabled {
-
-}
-
-.button:hover {
-	background-color: #478dff;
-}
-
-.button:active {
-	background-color: #3281ff;
+.empty {
+    color: #bbb;
+    font-weight: 300;
+    text-align: center;
 }
 
 .item {
@@ -94,16 +86,13 @@ h1 {
     outline: none;
     width: 90%;
 }
-	
-.item:hover {
-	
-}
 
 .item div:first-child {
 	float: left;
 }
+
 .item div.delete {
-	float: right;
 	cursor: pointer;
+	float: right;
 }
 

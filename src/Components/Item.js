@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import update from 'immutability-helper';
 
 export default class Item extends Component {
 	render() {
