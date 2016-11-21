@@ -25,7 +25,6 @@ var App = React.createClass({
     },
     _handleKeyPress: function(e) {
     	if (e.key === 'Enter' && !this.state.disabled) {
-    		this.disabled(this.state.newItem.value);
     		this.onAdd();
     	}
 	},
