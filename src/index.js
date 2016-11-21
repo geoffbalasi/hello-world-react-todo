@@ -1,54 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import update from 'immutability-helper';
+import ItemList from './Components/ItemList';
+import AddItem from './Components/AddItem';
 import './index.css';
-
-
-
-var AddItem = React.createClass({
-    render: function(){
-        return (
-            <div className="search_container">
-            	<h1> Today's Tasks </h1>
-            	<input ref="editItem" className="searchbox" type="text" placeholder="Enter Todo List Item" value={this.props.newItem.value} onChange={this.props.onChange} onKeyPress={this.props.keyPress} />
-                <input className="button" type="submit" value="Add" onClick={this.props.onAdd} disabled={this.props.disabled} />
-            </div>
-        );
-    }
-});
-
-var ItemList = React.createClass({
-	render: function(){	
-		var remove = this.props.removeItem;
-		var edit = this.props.edit;
-		var update = this.props.update;
-		var todos = this.props.items.map(function(item, index){
-            return <div key={index} className="item">
-            			<Item item={item} edit={edit} id={index} update={update} />
-            			<div className="delete" onClick={remove} id={index}> x </div>
-            			<div className="clear"> </div>
-            		</div>
-        });  
-        if (this.props.items.length > 0) {
-        	return (
-				<div className="container"> {todos} </div>
-			);
-        }
-        else {
-        	return (
-        		<div className="empty"> Nothing here yet </div>
-        	);
-        	
-        }
-		
-	}
-});
-
-var Item = React.createClass({
-	render: function(){
-		return <input type="text" value={this.props.item.value} onChange={this.props.update} id={this.props.id}/>
-	}
-});
 
 var App = React.createClass({
     getInitialState: function(){
@@ -69,11 +24,9 @@ var App = React.createClass({
         this.state.disabled = true;
     },
     _handleKeyPress: function(e) {
-    	if (e.key === 'Enter') {
-    		this.disabled(this.state.newItem);
-    		if (!this.state.disabled) {
-    			this.onAdd();
-    		}
+    	if (e.key === 'Enter' && !this.state.disabled) {
+    		this.disabled(this.state.newItem.value);
+    		this.onAdd();
     	}
 	},
     resetInput: function(){
@@ -108,7 +61,7 @@ var App = React.createClass({
     	});
     },
     disabled: function(text) {
-    	if ( text.value === '' ) {
+    	if ( text === '' ) {
     		this.setState({
 	    		disabled : true
 	    	})
